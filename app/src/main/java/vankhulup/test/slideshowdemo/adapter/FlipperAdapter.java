@@ -60,12 +60,34 @@ public class FlipperAdapter extends BaseAdapter {
         } else {
            viewHolder = (ViewHolder)convertView.getTag();
         }
-        Bitmap originalBitmap = BitmapFactory.decodeFile(filesAddresses.get(position));
-        int nh = (int) ( originalBitmap.getHeight() * (512.0 / originalBitmap.getWidth()) );
-        Bitmap recycledImage = Bitmap.createScaledBitmap(originalBitmap, 512, nh, true);
-        viewHolder.slideImage.setImageBitmap(recycledImage);
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filesAddresses.get(position), options);
+
+        options.inSampleSize = calculateInSimpleSize(options, 512, 512);
+
+        options.inJustDecodeBounds = false;
+        Bitmap image = BitmapFactory.decodeFile(filesAddresses.get(position), options);
+        viewHolder.slideImage.setImageBitmap(image);
         viewHolder.slideTitle.setText(filesAddresses.get(position));
 
         return convertView;
+    }
+
+    private int calculateInSimpleSize(BitmapFactory.Options options, int requiredWidth, int requiredHeight) {
+        final int rawHeight = options.outHeight;
+        final int rawWidth = options.outWidth;
+        int inSampleSize = 1;
+
+        if (rawHeight > requiredHeight|| rawWidth> requiredWidth) {
+            int halfHeight = rawHeight / 2;
+            int halfWidth = rawWidth / 2;
+
+            while ((halfHeight / inSampleSize) > requiredHeight
+                    && (halfWidth / inSampleSize)> requiredWidth)
+                inSampleSize *= 2;
+        }
+        return inSampleSize;
     }
 }

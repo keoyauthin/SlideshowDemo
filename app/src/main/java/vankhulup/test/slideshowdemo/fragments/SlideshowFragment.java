@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterViewFlipper;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,10 @@ public class SlideshowFragment extends Fragment {
 
     };
 
+    ImageButton nextButton;
+    ImageButton previousButton;
+    ImageButton playButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +63,46 @@ public class SlideshowFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSlideShowFlipper = (AdapterViewFlipper) view.findViewById(R.id.slideshow_flipper);
+        nextButton = (ImageButton)view.findViewById(R.id.nex_button);
+        previousButton = (ImageButton)view.findViewById(R.id.previous_button);
+        playButton = (ImageButton)view.findViewById(R.id.play_button);
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSlideShowFlipper.isFlipping()) {
+                    mSlideShowFlipper.stopFlipping();
+                    playButton.setBackgroundResource(android.R.drawable.ic_media_pause);
+                    Toast.makeText(getActivity(), "Stopped auto slide show", Toast.LENGTH_SHORT).show();
+                } else {
+                    mSlideShowFlipper.startFlipping();
+                    playButton.setBackgroundResource(android.R.drawable.ic_media_play);
+                    Toast.makeText(getActivity(), "Start auto slide show", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mSlideShowFlipper.isFlipping()){
+                    mSlideShowFlipper.showNext();
+                } else {
+                    Toast.makeText(getActivity(), "Fuck off, it's automated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mSlideShowFlipper.isFlipping()){
+                    mSlideShowFlipper.showPrevious();
+                } else {
+                    Toast.makeText(getActivity(), "Fuck off, it's automated", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         prepareFlipperSettings();
     }
 
@@ -62,5 +110,7 @@ public class SlideshowFragment extends Fragment {
         mSlideShowFlipper.setAutoStart(true);
         mSlideShowFlipper.setFlipInterval(2000);
         mSlideShowFlipper.setAdapter(new FlipperAdapter(getActivity(), availableImages));
+        mSlideShowFlipper.setInAnimation(getActivity(), R.anim.slide_in_right);
+        mSlideShowFlipper.setOutAnimation(getActivity(), R.anim.slide_out_left);
     }
 }
