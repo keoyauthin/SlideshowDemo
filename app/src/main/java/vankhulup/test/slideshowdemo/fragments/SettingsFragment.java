@@ -118,6 +118,7 @@ public class SettingsFragment extends Fragment {
         });
 
     }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void blur(Bitmap bitmap, View view) {
         float radius = 20;

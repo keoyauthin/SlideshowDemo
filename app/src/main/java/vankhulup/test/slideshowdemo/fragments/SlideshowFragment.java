@@ -48,7 +48,6 @@ public class SlideshowFragment extends Fragment {
     ImageButton nextButton;
     ImageButton previousButton;
     ImageButton playButton;
-    private BroadcastReceiver localEventsReceiver;
     private Animator.AnimatorListener animationListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
@@ -88,7 +87,7 @@ public class SlideshowFragment extends Fragment {
         }
         c.close();
 
-        localEventsReceiver = new BroadcastReceiver() {
+        BroadcastReceiver localEventsReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 updateSlideShowView(intent);
