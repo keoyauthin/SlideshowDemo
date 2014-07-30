@@ -7,7 +7,7 @@
     <string name="action_share">Share</string>
     <string name="choose_frequency_label">Choose frequency of slide change</string>
     <string name="current_frequency_label">Current frequency: </string>
-    <string name="scale_animation_label">Scale up-down</string>
+    <string name="rotate_animation_label">Rotate</string>
     <string name="fade_animation_label">Fade in-out</string>
     <string name="slide_animation_label">Slide left-right</string>
     <string name="choose_transition_animation_label">Choose transition animation</string>

@@ -41,7 +41,7 @@ public class SettingsFragment extends Fragment {
 
     public enum AnimationEnum {
         SLIDE,
-        SCALE,
+        ROTATE,
         FADE
     }
 
@@ -93,8 +93,8 @@ public class SettingsFragment extends Fragment {
                     case R.id.settings_animation_fade:
                         currentAnimation = AnimationEnum.FADE;
                         break;
-                    case R.id.settings_animation_scale:
-                        currentAnimation = AnimationEnum.SCALE;
+                    case R.id.settings_animation_rotate:
+                        currentAnimation = AnimationEnum.ROTATE;
                         break;
                     case R.id.settings_animation_slide:
                         currentAnimation = AnimationEnum.SLIDE;

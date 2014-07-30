@@ -69,11 +69,11 @@
                 android:textColor="@android:color/white"
                 android:text="@string/fade_animation_label"/>
             <RadioButton
-                android:id="@+id/settings_animation_scale"
+                android:id="@+id/settings_animation_rotate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:text="@string/scale_animation_label"/>
+                android:text="@string/rotate_animation_label"/>
             </RadioGroup>
     </LinearLayout>
 </FrameLayout>

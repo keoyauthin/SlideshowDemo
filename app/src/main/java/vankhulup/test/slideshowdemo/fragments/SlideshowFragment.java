@@ -23,8 +23,6 @@ import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,11 +117,11 @@ public class SlideshowFragment extends Fragment {
             public void onClick(View v) {
                 if (mSlideShowFlipper.isFlipping()) {
                     mSlideShowFlipper.stopFlipping();
-                    playButton.setBackgroundResource(android.R.drawable.ic_media_pause);
+                    playButton.setBackgroundResource(android.R.drawable.ic_media_play);
                     Toast.makeText(getActivity(), "Stopped auto slide show", Toast.LENGTH_SHORT).show();
                 } else {
                     mSlideShowFlipper.startFlipping();
-                    playButton.setBackgroundResource(android.R.drawable.ic_media_play);
+                    playButton.setBackgroundResource(android.R.drawable.ic_media_pause);
                     Toast.makeText(getActivity(), "Start auto slide show", Toast.LENGTH_SHORT).show();
                 }
 
@@ -161,21 +159,19 @@ public class SlideshowFragment extends Fragment {
         mShareActionProvider = (ShareActionProvider)
                 shareItem.getActionProvider();
         mShareActionProvider.setShareIntent(getDefaultIntent());
-        mShareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
-            @Override
-            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
-                return false;
-            }
-        });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
     }
 
     private void prepareFlipperSettings() {
         mSlideShowFlipper.setAutoStart(true);
         mSlideShowFlipper.setFlipInterval(2000);
         mSlideShowFlipper.setAdapter(new FlipperAdapter(getActivity(), availableImages));
-        mSlideShowFlipper.setInAnimation(getActivity(), R.anim.slide_in_right);
-        mSlideShowFlipper.setOutAnimation(getActivity(), R.anim.slide_out_left);
+        mSlideShowFlipper.setInAnimation(getActivity(), R.animator.slide_in_right);
+        mSlideShowFlipper.setOutAnimation(getActivity(), R.animator.slide_out_left);
         mSlideShowFlipper.getInAnimation().addListener(animationListener);
     }
 
@@ -199,23 +195,23 @@ public class SlideshowFragment extends Fragment {
             changeAnimation(newAnimation);
         }
         if (intent.hasExtra("newFrequency")) {
-            mSlideShowFlipper.setFlipInterval(intent.getIntExtra("newCategory", 0));
+            mSlideShowFlipper.setFlipInterval(intent.getIntExtra("newFrequency", 0));
         }
     }
 
     private void changeAnimation(SettingsFragment.AnimationEnum animation) {
         switch (animation) {
             case FADE:
-                mSlideShowFlipper.setInAnimation(getActivity(), R.anim.fade_in);
-                mSlideShowFlipper.setOutAnimation(getActivity(), R.anim.fade_out);
+                mSlideShowFlipper.setInAnimation(getActivity(), R.animator.fade_in);
+                mSlideShowFlipper.setOutAnimation(getActivity(), R.animator.fade_out);
                 break;
-            case SCALE:
-                mSlideShowFlipper.setInAnimation(getActivity(), R.anim.scale_up);
-                mSlideShowFlipper.setOutAnimation(getActivity(), R.anim.scale_down);
+            case ROTATE:
+                mSlideShowFlipper.setOutAnimation(getActivity(), R.animator.rotate_in);
+                mSlideShowFlipper.setInAnimation(getActivity(), R.animator.rotate_out);
                 break;
             case SLIDE:
-                mSlideShowFlipper.setInAnimation(getActivity(), R.anim.slide_in_right);
-                mSlideShowFlipper.setOutAnimation(getActivity(), R.anim.slide_out_left);
+                mSlideShowFlipper.setInAnimation(getActivity(), R.animator.slide_in_right);
+                mSlideShowFlipper.setOutAnimation(getActivity(), R.animator.slide_out_left);
                 break;
         }
     }
