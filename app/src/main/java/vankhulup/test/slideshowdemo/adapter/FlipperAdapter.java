@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,14 +63,16 @@ public class FlipperAdapter extends BaseAdapter {
         }
 
         BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPurgeable = true;
+        options.inInputShareable = true;
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filesAddresses.get(position), options);
 
         options.inSampleSize = calculateInSimpleSize(options, 512, 512);
 
         options.inJustDecodeBounds = false;
-        Bitmap image = BitmapFactory.decodeFile(filesAddresses.get(position), options);
-        viewHolder.slideImage.setImageBitmap(image);
+        WeakReference<Bitmap> imageRef = new WeakReference<>(BitmapFactory.decodeFile(filesAddresses.get(position), options));
+        viewHolder.slideImage.setImageBitmap(imageRef.get());
         viewHolder.slideTitle.setText(filesAddresses.get(position));
 
         return convertView;

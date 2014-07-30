@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ShareActionProvider;
 
+import vankhulup.test.slideshowdemo.fragments.SettingsFragment;
 import vankhulup.test.slideshowdemo.fragments.SlideshowFragment;
 
 
@@ -18,9 +20,7 @@ public class MainActivity extends Activity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, new SlideshowFragment())
                 .commit();
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,6 +31,15 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
+        switch (id){
+            case R.id.action_settings:
+                getFragmentManager().beginTransaction()
+                        .add(R.id.container, new SettingsFragment())
+                        .addToBackStack("settings")
+                        .commit();
+                return true;
+        }
+    return false;
     }
+
 }

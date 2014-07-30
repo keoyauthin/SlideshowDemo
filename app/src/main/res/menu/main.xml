@@ -6,7 +6,4 @@
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_preferences"/>
-    <item android:id="@+id/action_share"
-        android:title="@string/action_share"
-        android:showAsAction="never"/>
 </menu>
